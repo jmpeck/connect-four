@@ -1,0 +1,26 @@
+{
+  "name": "connect-four",
+  "version": "1.0.0",
+  "description": "An implementation of Connect Four in Javascript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmpeck/connect-four.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmpeck/connect-four/issues"
+  },
+  "homepage": "https://github.com/jmpeck/connect-four#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.4"
+  }
+}
