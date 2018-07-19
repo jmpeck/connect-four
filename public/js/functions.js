@@ -6,12 +6,59 @@
  * @param int y_pos The y-position of the location chosen.
  * //thinking of adding move number
  */
+
+ /// just to test
+
+ function submitShirtForm() {
+     console.log("it worked");
+
+    const shirtData = {
+        name: $('#shirt-name').val(),
+        description: $('#shirt-description').val(),
+        price: $('#shirt-price').val()
+     };
+     
+     console.log("Your shirt data", shirtData);
+
+     fetch('/api/shirt', {
+        method: 'post',
+        body: JSON.stringify(shirtData),
+        headers: {
+            'Content-Type': 'application/json'
+        }})
+        .then(response => response.json())
+        .then(shirt => {
+            console.log("we have posted the data", shirt);
+            refreshShirtList();
+        })
+        .catch(err => {
+            console.error("A terrible thing has happened", err);
+        }) 
+ }
+
+ function cancelShirtForm() {
+    console.log("cancel worked");
+ }
 function addDiscToBoard(color, x_pos, y_pos) {
     board[y_pos][x_pos] = color;
     console.log("Disk added. Congratulations.");
 
-    const moveData = board;
-    console.log(moveData);
+    // const moveData = board;
+    // console.log(moveData);
+    // fetch('/api/shirt', {
+    //     method: 'post',
+    //     body: JSON.stringify(moveData),
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     }})
+    //     .then(response => response.json())
+    //     .then(shirt => {
+    //         console.log("we have posted the data", shirt);
+    //         refreshShirtList();
+    //     })
+    //     .catch(err => {
+    //         console.error("A terrible thing has happened", err);
+    //     }) 
 }
 
 /**

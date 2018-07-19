@@ -28,25 +28,25 @@ Shirt.count({}, function (err, count) {
 module.exports = Shirt;
 
 
-const BoardSchema = new mongoose.Schema({
-    board: Array,
-});
-
-const Board = mongoose.model("Board", BoardSchema);
-
-// Board.count({}, function (err, count) {
-//     if(err) {
-//         throw err;
-//     }
-//     if (count > 0) return;
-
-//     const seedBoards = require("./board.seed.json");
-//     Board.create(seedBoards, function (err, newShirts) {
-//         if (err) {
-//             throw err;
-//         }
-//         console.log("DB seeded")
-//     });
+// const BoardSchema = new mongoose.Schema({
+//     board: Array,
 // });
 
-module.exports = Board;
+// const Board = mongoose.model("Board", BoardSchema);
+
+// // Board.count({}, function (err, count) {
+// //     if(err) {
+// //         throw err;
+// //     }
+// //     if (count > 0) return;
+
+// //     const seedBoards = require("./board.seed.json");
+// //     Board.create(seedBoards, function (err, newShirts) {
+// //         if (err) {
+// //             throw err;
+// //         }
+// //         console.log("DB seeded")
+// //     });
+// // });
+
+// module.exports = Board;

@@ -4,7 +4,7 @@ function listItemTemplate(data) {
     data.forEach(item => {
     compiled += `
     <li class="list-group-item">
-      <strong>${item.name}</strong> - ${item.description}
+      <strong>${item.name}</strong> - ${item.description} -${item.price}
     </li>
     `;
   });
