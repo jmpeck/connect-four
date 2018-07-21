@@ -96,8 +96,8 @@
           <label for="shirt-price">Price</label>
           <input type="text" class="form-control" id="shirt-price" placeholder="Price">
         </div>
-        <button type="button" onclick="submitShirtForm()" class="btn btn-success">Submit</button>
-        <button type="button" onclick="cancelShirtForm()" class="btn btn-link">cancel</button>
+        <!-- <button type="button" onclick="submitShirtForm()" class="btn btn-success">Submit</button>
+        <button type="button" onclick="cancelShirtForm()" class="btn btn-link">cancel</button> -->
       </form>
     </div>
   </section>
@@ -111,7 +111,7 @@
       const greetingTemplate = `<p>Hello ${welcome.name}! Let's play Connect Four<p>`;
       // put the template data into the actual page
       $('body h1').first().after(greetingTemplate); 
-      refreshShirtList() 
+      refreshMoveList() 
     });
   </script>
 </body>

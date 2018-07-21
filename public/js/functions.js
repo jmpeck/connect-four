@@ -9,39 +9,58 @@
 
  /// just to test
 
- function submitShirtForm() {
-     console.log("it worked");
+ function submitMove() {
+    console.log("it worked");
 
-    const shirtData = {
-        name: $('#shirt-name').val(),
-        description: $('#shirt-description').val(),
-        price: $('#shirt-price').val()
+    let color = currentPlayer;
+
+    const moveData = {
+        move: move_count + 1,
+        player: color,
+        board: board
      };
      
-     console.log("Your shirt data", shirtData);
+     console.log("Your move data", moveData);
 
-     fetch('/api/shirt', {
+     fetch('/api/board', {
         method: 'post',
-        body: JSON.stringify(shirtData),
+        body: JSON.stringify(moveData),
         headers: {
             'Content-Type': 'application/json'
         }})
         .then(response => response.json())
-        .then(shirt => {
-            console.log("we have posted the data", shirt);
-            refreshShirtList();
+        .then(move => {
+            console.log("we have posted the data", move);
+            refreshMoveList();
         })
         .catch(err => {
             console.error("A terrible thing has happened", err);
         }) 
  }
 
- function cancelShirtForm() {
-    console.log("cancel worked");
- }
+ function handleEditMove (element) {
+    const moveId = element.getAttribute("data-move-id");
+    console.log("I will edit for you", moveId);
+    const move = window.movelist.find(move => move._id === moveId);
+        if (move) {
+            console.log("I will edit you!", move);
+            recallBoard(move.board);
+        } else {
+            console.log("Aw shucks, I didn't find", moveId)
+  }
+}
+
+
+//  function cancelShirtForm() {
+//     console.log("cancel worked");
+//  }
+
 function addDiscToBoard(color, x_pos, y_pos) {
     board[y_pos][x_pos] = color;
     console.log("Disk added. Congratulations.");
+    move_count += 1;
+
+    submitMove()
 
     // const moveData = board;
     // console.log(moveData);
@@ -67,6 +86,7 @@ function addDiscToBoard(color, x_pos, y_pos) {
 function printBoard() {
     // Loop through the board, and add classes to each cell for the
     // appropriate colors.
+    
     for (var y = 0; y <= 5; y++) {
         for (var x = 0; x <= 6; x++) {
             if (board[y][x] !== 0) {
@@ -76,7 +96,40 @@ function printBoard() {
         }
     }
     console.log("Move submitted. Congratulations.");
+    
 }
+
+function recallBoard(board) {
+    for (var y = 0; y <= 5; y++) {
+        for (var x = 0; x <= 6; x++) {
+            if (board[y][x] !== 0) {
+                var cell = $("tr:eq(" + y + ")").find('td').eq(x);
+                cell.children('button').addClass(board[y][x]);
+            }
+            
+        //     else if (board[y][x] === 0) {
+        //         var cell = $("tr:eq(" + y + ")").find('td').eq(x);
+        //         cell.children('button').classList.remove("black");
+        //     }
+        // }
+    // }
+    console.log("Move submitted. Congratulations.");
+        }
+    }
+}
+
+//overloaded printBoard
+// function printBoard(data) {
+//     for (var y = 0; y <= 5; y++) {
+//         for (var x = 0; x <= 6; x++) {
+//             if (data[y][x] !== 0) {
+//                 var cell = $("tr:eq(" + y + ")").find('td').eq(x);
+//                 cell.children('button').addClass(data[y][x]);
+//             }
+//         }
+//     }
+//     console.log("Move submitted. Congratulations.");
+// }
 
 /**
  * A function for changing players at the end of a turn.

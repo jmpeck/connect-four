@@ -1,68 +1,62 @@
 const router = require('express').Router();
 //Import all models
-let shirt = require("../models/shirt.model.js")
+let board = require("../models/board.model")
 
 module.exports = router;
 
-const SHIRTS = [
-    {id: 'a', name: 'Cat tree', description: 'A cute cat shirt', price: 20.0},
-    {id: 'b', name: 'iron man', description: 'tony stark in a suit', price: 10.0},
-    {id: 'c', name: 'snow man', description: 'A cool shirt', price: 12.50},
-    {id: 'd', name: 'coffee', description: 'A pick me up', price: 15.0}
-  ];
-
-  router.get('/shirt', function (req, res, next) {
-    shirt.find({}, function(err, shirts) {
+router.get('/board', function (req, res, next) {
+    board.find({}, function(err, boards) {
       if (err) {
         console.log(err);
         return res.status(500).json(err);
       }
     
-      res.json(shirts);
+      res.json(boards);
     });
   });
   
-router.post('/shirt', function(req, res, next) {
-    const shirtData = {
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price
+router.post('/board', function(req, res, next) {
+    const moveData = {
+        move: req.body.move,
+        player: req.body.player,
+        board: req.body.board
     };
 
-    shirt.create(shirtData, function(err, newShirt) {
+    board.create(moveData, function(err, newBoard) {
         if (err) {
             console.error(err);
             return res.status(500).json(err);
         }
 
-        res.json(newShirt);
+        res.json(newBoard);
     });
 });
 
-router.put('/shirt/:shirtId', function(req, res, next) {
-    const {shirtId} = req.params;
-    const shirt = SHIRTS.find(entry => entry.id === shirtId);
-    if (!shirt) {
-      return res.status(404).end(`Could not find shirt '${shirtId}'`);
+router.put('/board/:moveId', function(req, res, next) {
+    const {moveId} = req.params;
+    const board = boards.find(entry => entry.id === moveId);
+    if (!board) {
+      return res.status(404).end(`Could not find board '${moveId}'`);
     }
   
-    shirt.name = req.body.name;
-    shirt.description = req.body.description;
-    res.json(shirt);
+    board.move = req.body.move;
+    board.player = req.body.player;
+    board.board = req.body.board;
+    res.json(board);
   });
     
-router.delete('/shirt/:shirtId', function(req, res, next) {
-res.end(`Deleting a shirt '${req.params.shirtId}'`);
+router.delete('/board/:moveId', function(req, res, next) {
+res.end(`Deleting a board '${req.params.moveId}'`);
 });
 
-router.get('/shirt/:shirtId', function(req, res, next) {
-    const {shirtId} = req.params;
-    // same as 'const shirtId = req.params.shirtId'
+router.get('/board/:moveId', function(req, res, next) {
+    const {moveId} = req.params;
+    // same as 'const moveId = req.params.moveId'
   
-    const shirt = SHIRTS.find(entry => entry.id === shirtId);
-    if (!shirt) {
-      return res.status(404).end(`Could not find shirt '${shirtId}'`);
+    const board = boards.find(entry => entry.id === moveId);
+    if (!board) {
+      return res.status(404).end(`Could not find board '${moveId}'`);
     }
   
-    res.json(shirt);
+    res.json(board);
   });

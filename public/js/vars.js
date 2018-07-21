@@ -4,32 +4,37 @@ function listItemTemplate(data) {
     data.forEach(item => {
     compiled += `
     <li class="list-group-item">
-      <strong>${item.name}</strong> - ${item.description} -${item.price}
+      <strong>${item.move}</strong> - ${item.player} - ${item.board}
     </li>
-    `;
-  });
-  return compiled;
+    <span class="pull-right">
+        <button type="button" class="btn btn-xs btn-default" onclick="handleEditMove(this)" data-move-id="${item._id}">Edit</button>
+    </span>
+</li>
+`;
+});
+compiled = `<ul class="list-group">${compiled}</ul>`;
+return compiled;
 }
 
-function getShirts() {
+function getMoves() {
     //testing out my add -- returns the state of the board!!!
     //return board;
-    return $.ajax('/api/shirt')
+    return $.ajax('/api/board')
       .then(res => {
-        console.log("Results from getShirts()", res);
+        console.log("Results from getMoves()", res);
         return res;
       })
       .fail(err => {
-        console.log("Error in getShirts()", err);
+        console.log("Error in getMoves()", err);
         throw err;
       });
   }
 
-  function refreshShirtList() {
-    getShirts()
-      .then(shirts => {
-        const data = {shirts: shirts};
-        $('#list-container').html(listItemTemplate(data.shirts));
+  function refreshMoveList() {
+    getMoves()
+      .then(moves => {
+        window.movelist = moves;        
+        $('#list-container').html(listItemTemplate(moves));
       })
   }
 
@@ -55,7 +60,7 @@ var config = {
         playerPrefix: "Current Player is: ",
         winPrefix: "The winner is: ",
         countToWin: 4,
-    };
+};
 
 // Define the empty board as a two-dimensional array, full of zeros. In our
 // game, 0 represents empty, 'red' represents a red disc, and 'black' represents
@@ -69,3 +74,9 @@ var board = [[0,0,0,0,0,0,0],
 
 // Set the starting player.
 var currentPlayer = config.startingPlayer;
+
+// Begin to count moves.
+var move_count = 0;
+
+// Keep track of current color.
+
