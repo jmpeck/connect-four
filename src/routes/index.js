@@ -5,7 +5,7 @@ let board = require("../models/board.model")
 module.exports = router;
 
 router.get('/board', function (req, res, next) {
-    board.find({}, function(err, boards) {
+    board.find({deleted: {$ne: true}}, function(err, boards) {
       if (err) {
         console.log(err);
         return res.status(500).json(err);
@@ -46,8 +46,24 @@ router.put('/board/:moveId', function(req, res, next) {
   });
     
 router.delete('/board/:moveId', function(req, res, next) {
-res.end(`Deleting a board '${req.params.moveId}'`);
-});
+    const moveId = req.params.moveId
+
+    board.findById(moveId, function (err, move) {
+      if (err) {
+        console.log(err)
+        return res.status(500).json(err)
+      }
+      if (!move) {
+        return res.status(404).json({message: 'Shirt not found'})
+      }
+  
+      move.deleted = true
+  
+      move.save(function (err, doomedMove) {
+        res.json(doomedMove)
+      })
+    })
+  });
 
 router.get('/board/:moveId', function(req, res, next) {
     const {moveId} = req.params;

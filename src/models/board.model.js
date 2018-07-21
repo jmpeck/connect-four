@@ -29,9 +29,12 @@ const mongoose = require("mongoose");
 
 
 const BoardSchema = new mongoose.Schema({
-    move: Number,
-    player: String,
-    board: Array
+    playerOne: String,
+    playerTwo: String,
+    winner: String,
+    board: Array,
+    created_at: { type: Date, default: Date.now },
+    deleted: { type: Boolean }
 });
 
 const Board = mongoose.model("Board", BoardSchema);

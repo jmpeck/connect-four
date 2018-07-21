@@ -1,4 +1,5 @@
 //john's bs
+//fix the html with the edit button
 function listItemTemplate(data) {
     var compiled = '';
     data.forEach(item => {
@@ -8,6 +9,7 @@ function listItemTemplate(data) {
     </li>
     <span class="pull-right">
         <button type="button" class="btn btn-xs btn-default" onclick="handleEditMove(this)" data-move-id="${item._id}">Edit</button>
+        <button type="button" class="btn btn-xs btn-danger" onclick="handleDeleteMove(this)" data-move-id="${item._id}">Del</button>
     </span>
 </li>
 `;

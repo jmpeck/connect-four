@@ -38,6 +38,35 @@
         }) 
  }
 
+ function deleteMove() {
+    console.log("it worked");
+
+    // let color = currentPlayer;
+
+    // const moveData = {
+    //     move: move_count + 1,
+    //     player: color,
+    //     board: board
+    //  };
+     //fix this by following the class project
+     console.log("Your move data", moveData);
+
+     fetch('/api/board', {
+        method: 'post',
+        body: JSON.stringify(moveData),
+        headers: {
+            'Content-Type': 'application/json'
+        }})
+        .then(response => response.json())
+        .then(move => {
+            console.log("we have posted the data", move);
+            refreshMoveList();
+        })
+        .catch(err => {
+            console.error("A terrible thing has happened", err);
+        }) 
+ }
+
  function handleEditMove (element) {
     const moveId = element.getAttribute("data-move-id");
     console.log("I will edit for you", moveId);
@@ -50,6 +79,14 @@
   }
 }
 
+function handleDeleteMove(element) {
+    const moveId = element.getAttribute('data-move-id');
+  
+    if (confirm("Are you sure?")){
+        deleteMove(moveId);
+    }
+  }
+
 
 //  function cancelShirtForm() {
 //     console.log("cancel worked");
@@ -59,8 +96,6 @@ function addDiscToBoard(color, x_pos, y_pos) {
     board[y_pos][x_pos] = color;
     console.log("Disk added. Congratulations.");
     move_count += 1;
-
-    submitMove()
 
     // const moveData = board;
     // console.log(moveData);
