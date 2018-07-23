@@ -45,10 +45,11 @@ button.black {
   color: black;
 }
 
-.play-again {
+.play-again, .submit-game {
   display: none;
 }
-.play-again {
+
+.play-again, .submit-game {
   display: inline-block;
   margin-bottom: 2em;
   height: 40px;
@@ -60,7 +61,7 @@ button.black {
   font-family: helvetica;
   opacity: 0.9;
 }
-.play-again:hover {
+.play-again:hover, .submit-game:hover {
   opacity: 1;
 }
 

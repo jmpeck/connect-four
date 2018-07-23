@@ -33,6 +33,7 @@ $(document).ready(function() {
             $('.board button').unbind('click');
             $('.prefix').text(config.winPrefix);
             $('.play-again').show("slow");
+            $('.submit-game').show();
 
             return;
 
@@ -41,6 +42,7 @@ $(document).ready(function() {
             $('.board button').unbind('click');
             $('.message').text(config.drawMsg);
             $('.play-again').show("slow");
+            $('.submit-game').show();
             return;
         }
 

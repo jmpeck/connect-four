@@ -1,22 +1,34 @@
-//john's bs
+
 //fix the html with the edit button
 function listItemTemplate(data) {
-    var labels = ''
+    var labels = `
+    <thead>
+        <tr>
+            <th>Red</th>
+            <th>Black</th>
+            <th>Winner</th>
+        </tr>
+    </thead>
+    `;
     var compiled = '';
     data.forEach(item => {
     compiled += `
-    <li class="list-group-item">
-      <strong>${item.playerOne}</strong> - <strong>${item.playerTwo}</strong>- ${item.winner}
-    </li>
-    <span class="pull-right">
-        <button type="button" class="btn btn-xs btn-default" onclick="handleEditMove(this)" data-move-id="${item._id}">Edit</button>
-        <button type="button" class="btn btn-xs btn-danger" onclick="handleDeleteMove(this)" data-move-id="${item._id}">Del</button>
-    </span>
-</li>
+    <tr class="list-group-item">
+      <td>${item.playerOne}</td>
+      <td>${item.playerTwo}</td>
+      <td>${item.winner}</td>
+        <td>
+            <span class="pull-right">
+                <button type="button" class="btn btn-xs btn-default" onclick="handleEditMove(this)" data-move-id="${item._id}">Edit</button>
+                <button type="button" class="btn btn-xs btn-danger" onclick="handleDeleteMove(this)" data-move-id="${item._id}">Del</button>
+            </span>
+        </td>
+    </tr>
 `;
 });
-compiled = `<ul class="list-group">${compiled}</ul>`;
-return compiled;
+compiled = `<tbody class="list-group">${compiled}</tbody>`;
+full_table = labels + compiled;
+return full_table;
 }
 
 function getMoves() {
