@@ -1,11 +1,12 @@
 //john's bs
 //fix the html with the edit button
 function listItemTemplate(data) {
+    var labels = ''
     var compiled = '';
     data.forEach(item => {
     compiled += `
     <li class="list-group-item">
-      <strong>${item.move}</strong> - ${item.player} - ${item.board}
+      <strong>${item.playerOne}</strong> - <strong>${item.playerTwo}</strong>- ${item.winner}
     </li>
     <span class="pull-right">
         <button type="button" class="btn btn-xs btn-default" onclick="handleEditMove(this)" data-move-id="${item._id}">Edit</button>
@@ -36,7 +37,7 @@ function getMoves() {
     getMoves()
       .then(moves => {
         window.movelist = moves;        
-        $('#list-container').html(listItemTemplate(moves));
+        $('#data-container').html(listItemTemplate(moves));
       })
   }
 

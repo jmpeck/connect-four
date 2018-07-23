@@ -17,9 +17,12 @@ router.get('/board', function (req, res, next) {
   
 router.post('/board', function(req, res, next) {
     const moveData = {
-        move: req.body.move,
-        player: req.body.player,
-        board: req.body.board
+        playerOne: req.body.playerOne,
+        playerTwo: req.body.playerTwo,
+        winner: req.body.winner,
+        board: req.body.board,
+        // created_at: req.body.created_at,
+        // deleted: req.body.deleted
     };
 
     board.create(moveData, function(err, newBoard) {

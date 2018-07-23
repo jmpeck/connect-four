@@ -12,12 +12,15 @@
  function submitMove() {
     console.log("it worked");
 
-    let color = currentPlayer;
+    
 
     const moveData = {
-        move: move_count + 1,
-        player: color,
-        board: board
+        playerOne: config.blackPlayerName,
+        playerTwo: config.redPlayerName,
+        winner: $("#player").text(),
+        board: board,
+        created_at: { type: Date, default: Date.now },
+        deleted: { type: Boolean }
      };
      
      console.log("Your move data", moveData);
@@ -38,7 +41,21 @@
         }) 
  }
 
- function deleteMove() {
+ function deleteMove(moveId) {
+    const url = '/api/board/' + moveId;
+
+    fetch(url, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.json())
+    .then(response => {
+        console.log("DOOOOOOOM!!!!");
+        refreshMoveList();
+    })
+    .catch(err => {
+        console.error("I'm not dead yet!", err)
+    })
     console.log("it worked");
 
     // let color = currentPlayer;
@@ -49,22 +66,6 @@
     //     board: board
     //  };
      //fix this by following the class project
-     console.log("Your move data", moveData);
-
-     fetch('/api/board', {
-        method: 'post',
-        body: JSON.stringify(moveData),
-        headers: {
-            'Content-Type': 'application/json'
-        }})
-        .then(response => response.json())
-        .then(move => {
-            console.log("we have posted the data", move);
-            refreshMoveList();
-        })
-        .catch(err => {
-            console.error("A terrible thing has happened", err);
-        }) 
  }
 
  function handleEditMove (element) {

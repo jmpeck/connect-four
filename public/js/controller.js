@@ -33,6 +33,7 @@ $(document).ready(function() {
             $('.board button').unbind('click');
             $('.prefix').text(config.winPrefix);
             $('.play-again').show("slow");
+
             return;
 
         } else if (gameIsDraw()) {
