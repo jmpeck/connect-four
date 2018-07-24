@@ -12,21 +12,32 @@
  function submitMove() {
     console.log("it worked");
 
-    
-
     const moveData = {
         playerOne: config.blackPlayerName,
         playerTwo: config.redPlayerName,
         winner: $("#player").text(),
         board: board,
         created_at: { type: Date, default: Date.now },
-        deleted: { type: Boolean }
+        deleted: { type: Boolean },
+        _id: $('#move-id').val()
      };
      
      console.log("Your move data", moveData);
 
-     fetch('/api/board', {
-        method: 'post',
+    let method, url;
+    if (moveData._id) {
+        moveData.playerOne = $('#playerOne-name').val(); 
+        moveData.playerTwo = $('#playerTwo-name').val();
+        moveData.winner = $('#winner-name').val();
+        method = 'PUT';
+        url = '/api/board/' + moveData._id;
+    } else {
+        method = 'POST';
+        url = '/api/board';
+  }
+
+     fetch(url, {
+        method: method,
         body: JSON.stringify(moveData),
         headers: {
             'Content-Type': 'application/json'
@@ -72,13 +83,28 @@
     const moveId = element.getAttribute("data-move-id");
     console.log("I will edit for you", moveId);
     const move = window.movelist.find(move => move._id === moveId);
-        if (move) {
-            console.log("I will edit you!", move);
-            recallBoard(move.board);
-        } else {
-            console.log("Aw shucks, I didn't find", moveId)
+    if (move) {
+     setForm(move);
+    }
+  
+    showEditForm();
   }
-}
+
+  function setForm(data) {
+    data = data || {};
+  
+    const move = {
+      playerOne: data.playerOne || '',
+      playerTwo: data.playerTwo || '',
+      winner: data.winner || '',
+      _id: data._id || '',
+    };
+  
+    $('#playerOne-name').val(move.playerOne);
+    $('#playerTwo-name').val(move.playerTwo);
+    $('#winner-name').val(move.winner);
+    $('#move-id').val(move._id);
+  }
 
 function handleDeleteMove(element) {
     const moveId = element.getAttribute('data-move-id');
@@ -87,6 +113,14 @@ function handleDeleteMove(element) {
         deleteMove(moveId);
     }
   }
+
+function showEditForm() {
+    $('#edit-board-form').show();
+}
+
+function hideEditForm(){
+    $('#edit-board-form').hide();
+}
 
 
 //  function cancelShirtForm() {
@@ -149,7 +183,7 @@ function recallBoard(board) {
         //     }
         // }
     // }
-    console.log("Move submitted. Congratulations.");
+    console.log("This is what the win looked like.");
         }
     }
 }

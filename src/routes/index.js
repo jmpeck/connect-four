@@ -36,16 +36,30 @@ router.post('/board', function(req, res, next) {
 });
 
 router.put('/board/:moveId', function(req, res, next) {
-    const {moveId} = req.params;
-    const board = boards.find(entry => entry.id === moveId);
-    if (!board) {
-      return res.status(404).end(`Could not find board '${moveId}'`);
-    }
+    const moveId = req.params.moveId;
+       
+    board.findById(moveId, function(err, board) {
+      if (err) {
+        console.error(err);
+        return res.status(500).json(err);
+      }
+      if (!board) {
+        return res.status(404).json({message: "move not found"});
+      }
   
-    board.move = req.body.move;
-    board.player = req.body.player;
-    board.board = req.body.board;
-    res.json(board);
+    board.playerOne = req.body.playerOne;
+    board.playerTwo = req.body.playerTwo;
+    board.winner = req.body.winner;
+  
+    board.save(function(err, savedmove) {
+        if (err) {
+          console.error(err);
+          return res.status(500).json(err);
+        }
+        res.json(savedmove);
+      })
+  
+    })
   });
     
 router.delete('/board/:moveId', function(req, res, next) {
@@ -57,7 +71,7 @@ router.delete('/board/:moveId', function(req, res, next) {
         return res.status(500).json(err)
       }
       if (!move) {
-        return res.status(404).json({message: 'Shirt not found'})
+        return res.status(404).json({message: 'Move not found'})
       }
   
       move.deleted = true
