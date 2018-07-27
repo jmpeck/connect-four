@@ -1,5 +1,5 @@
 
-//fix the html with the edit button
+//(John) this lists the players in the winner table
 function listItemTemplate(data) {
     var labels = `
     <thead>
@@ -32,9 +32,8 @@ full_table = labels + compiled;
 return full_table;
 }
 
+//(John)this uses an ajax request to get previous board states
 function getMoves() {
-    //testing out my add -- returns the state of the board!!!
-    //return board;
     return $.ajax('/api/board')
       .then(res => {
         console.log("Results from getMoves()", res);

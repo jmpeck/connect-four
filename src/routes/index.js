@@ -4,6 +4,7 @@ let board = require("../models/board.model")
 
 module.exports = router;
 
+// (John) get route (ie Read function)
 router.get('/board', function (req, res, next) {
     board.find({deleted: {$ne: true}}, function(err, boards) {
       if (err) {
@@ -14,7 +15,8 @@ router.get('/board', function (req, res, next) {
       res.json(boards);
     });
   });
-  
+
+// (John) post route (ie Create function)
 router.post('/board', function(req, res, next) {
     const moveData = {
         playerOne: req.body.playerOne,
@@ -35,6 +37,7 @@ router.post('/board', function(req, res, next) {
     });
 });
 
+// (John) put route (ie update function)
 router.put('/board/:moveId', function(req, res, next) {
     const moveId = req.params.moveId;
        
@@ -62,6 +65,7 @@ router.put('/board/:moveId', function(req, res, next) {
     })
   });
     
+// (John) delete route
 router.delete('/board/:moveId', function(req, res, next) {
     const moveId = req.params.moveId
 
@@ -82,6 +86,7 @@ router.delete('/board/:moveId', function(req, res, next) {
     })
   });
 
+// (John) get route for individual boards
 router.get('/board/:moveId', function(req, res, next) {
     const {moveId} = req.params;
     // same as 'const moveId = req.params.moveId'

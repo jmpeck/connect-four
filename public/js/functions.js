@@ -7,7 +7,9 @@
  * //thinking of adding move number
  */
 
- /// just to test
+ 
+ //(John) This is my function to submit the finished board to the database either
+ //as post or put
 
  function submitMove() {
     console.log("it worked");
@@ -53,6 +55,7 @@
         cancelForm();
  }
 
+ //(John) this is how I soft delete boards from the database
  function deleteMove(moveId) {
     const url = '/api/board/' + moveId;
 
@@ -71,6 +74,7 @@
     console.log("it worked");
  }
 
+ //(John) this handles the user's button press to edit the board's info in the database
  function handleEditMove (element) {
     const moveId = element.getAttribute("data-move-id");
     console.log("I will edit for you", moveId);
@@ -82,6 +86,7 @@
     showEditForm();
   }
 
+//(John) this sets the form to show current values
   function setForm(data) {
     data = data || {};
   
@@ -98,15 +103,18 @@
     $('#move-id').val(move._id);
   }
 
+  //(John) this cancels the edit and hides the form again
   function cancelForm () {
     setForm()
     hideForm()
   }
 
+  //(John) the hide form function
   function hideForm() {
       $("#edit-board-form").hide();
   }
 
+  //(John) this handles the user's decision to delete a board
 function handleDeleteMove(element) {
     const moveId = element.getAttribute('data-move-id');
   
@@ -115,19 +123,12 @@ function handleDeleteMove(element) {
     }
   }
 
+  //(John) this shows the edit form
 function showEditForm() {
     $('#edit-board-form').show();
 }
 
-function hideEditForm(){
-    $('#edit-board-form').hide();
-}
-
-
-//  function cancelShirtForm() {
-//     console.log("cancel worked");
-//  }
-
+//this is Bryan's function for adding a disk to board
 function addDiscToBoard(color, x_pos, y_pos) {
     board[y_pos][x_pos] = color;
     console.log("Disk added. Congratulations.");
@@ -154,7 +155,7 @@ function printBoard() {
     
 }
 
-//this is what recreates the board state when user hits the review button
+//(John)this is what recreates the board state when user hits the review button
 function recallBoard(element) {
     const moveId = element.getAttribute("data-move-id");
     console.log("Here is what it looked like", moveId);
@@ -163,7 +164,7 @@ function recallBoard(element) {
     console.log(move);
     var state = move.board;
 
-    //I add classes to the buttons and remove them according to the saved board array
+    //(John) added classes to the buttons and remove them according to the saved board array
     for (var y = 0; y <= 5; y++) {
         for (var x = 0; x <= 6; x++) {
             var cell = $("tr:eq(" + y + ")").find('td').eq(x);
