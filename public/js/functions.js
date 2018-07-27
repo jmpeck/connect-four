@@ -49,6 +49,8 @@
         .catch(err => {
             console.error("A terrible thing has happened", err);
         }) 
+    
+        cancelForm();
  }
 
  function deleteMove(moveId) {
@@ -94,6 +96,15 @@
     $('#playerTwo-name').val(move.playerTwo);
     $('#winner-name').val(move.winner);
     $('#move-id').val(move._id);
+  }
+
+  function cancelForm () {
+    setForm()
+    hideForm()
+  }
+
+  function hideForm() {
+      $("#edit-board-form").hide();
   }
 
 function handleDeleteMove(element) {
@@ -146,27 +157,26 @@ function printBoard() {
 //this is what recreates the board state when user hits the review button
 function recallBoard(element) {
     const moveId = element.getAttribute("data-move-id");
-    console.log("I will edit for you", moveId);
+    console.log("Here is what it looked like", moveId);
     const move = window.movelist.find(move => move._id === moveId);
 
     console.log(move);
-    var board = move.board;
+    var state = move.board;
 
     //I add classes to the buttons and remove them according to the saved board array
     for (var y = 0; y <= 5; y++) {
         for (var x = 0; x <= 6; x++) {
-            if (board[y][x] !== 0) {
+            var cell = $("tr:eq(" + y + ")").find('td').eq(x);
+            cell.children('button').removeClass();
+            if (state[y][x] !== 0) {
                 var cell = $("tr:eq(" + y + ")").find('td').eq(x);
-                cell.children('button').addClass(board[y][x]);
-            } else {
-                var cell = $("tr:eq(" + y + ")").find('td').eq(x);
-                cell.children('button').removeClass();
-            }
+                cell.children('button').addClass(state[y][x]);
         }
     }
-    console.log("This is what the win looked like.");
+   
     $('.play-again').show("slow");
   }
+}
 
 /**
  * A function for changing players at the end of a turn.
