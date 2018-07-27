@@ -17,8 +17,6 @@
         playerTwo: config.redPlayerName,
         winner: $("#player").text(),
         board: board,
-        created_at: { type: Date, default: Date.now },
-        deleted: { type: Boolean },
         _id: $('#move-id').val()
      };
      
@@ -29,12 +27,13 @@
         moveData.playerOne = $('#playerOne-name').val(); 
         moveData.playerTwo = $('#playerTwo-name').val();
         moveData.winner = $('#winner-name').val();
+        moveData.board = $('#move-board').val();
         method = 'PUT';
         url = '/api/board/' + moveData._id;
     } else {
         method = 'POST';
         url = '/api/board';
-  }
+    }
 
      fetch(url, {
         method: method,
@@ -68,15 +67,6 @@
         console.error("I'm not dead yet!", err)
     })
     console.log("it worked");
-
-    // let color = currentPlayer;
-
-    // const moveData = {
-    //     move: move_count + 1,
-    //     player: color,
-    //     board: board
-    //  };
-     //fix this by following the class project
  }
 
  function handleEditMove (element) {
@@ -132,22 +122,6 @@ function addDiscToBoard(color, x_pos, y_pos) {
     console.log("Disk added. Congratulations.");
     move_count += 1;
 
-    // const moveData = board;
-    // console.log(moveData);
-    // fetch('/api/shirt', {
-    //     method: 'post',
-    //     body: JSON.stringify(moveData),
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     }})
-    //     .then(response => response.json())
-    //     .then(shirt => {
-    //         console.log("we have posted the data", shirt);
-    //         refreshShirtList();
-    //     })
-    //     .catch(err => {
-    //         console.error("A terrible thing has happened", err);
-    //     }) 
 }
 
 /**
@@ -169,37 +143,30 @@ function printBoard() {
     
 }
 
-function recallBoard(board) {
+//this is what recreates the board state when user hits the review button
+function recallBoard(element) {
+    const moveId = element.getAttribute("data-move-id");
+    console.log("I will edit for you", moveId);
+    const move = window.movelist.find(move => move._id === moveId);
+
+    console.log(move);
+    var board = move.board;
+
+    //I add classes to the buttons and remove them according to the saved board array
     for (var y = 0; y <= 5; y++) {
         for (var x = 0; x <= 6; x++) {
             if (board[y][x] !== 0) {
                 var cell = $("tr:eq(" + y + ")").find('td').eq(x);
                 cell.children('button').addClass(board[y][x]);
+            } else {
+                var cell = $("tr:eq(" + y + ")").find('td').eq(x);
+                cell.children('button').removeClass();
             }
-            
-        //     else if (board[y][x] === 0) {
-        //         var cell = $("tr:eq(" + y + ")").find('td').eq(x);
-        //         cell.children('button').classList.remove("black");
-        //     }
-        // }
-    // }
-    console.log("This is what the win looked like.");
         }
     }
-}
-
-//overloaded printBoard
-// function printBoard(data) {
-//     for (var y = 0; y <= 5; y++) {
-//         for (var x = 0; x <= 6; x++) {
-//             if (data[y][x] !== 0) {
-//                 var cell = $("tr:eq(" + y + ")").find('td').eq(x);
-//                 cell.children('button').addClass(data[y][x]);
-//             }
-//         }
-//     }
-//     console.log("Move submitted. Congratulations.");
-// }
+    console.log("This is what the win looked like.");
+    $('.play-again').show("slow");
+  }
 
 /**
  * A function for changing players at the end of a turn.

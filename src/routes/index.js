@@ -22,7 +22,7 @@ router.post('/board', function(req, res, next) {
         winner: req.body.winner,
         board: req.body.board,
         // created_at: req.body.created_at,
-        // deleted: req.body.deleted
+        deleted: req.body.deleted
     };
 
     board.create(moveData, function(err, newBoard) {

@@ -13,7 +13,7 @@ function listItemTemplate(data) {
     var compiled = '';
     data.forEach(item => {
     compiled += `
-    <tr class="list-group-item">
+    <tr>
       <td>${item.playerOne}</td>
       <td>${item.playerTwo}</td>
       <td>${item.winner}</td>
@@ -21,12 +21,13 @@ function listItemTemplate(data) {
             <span class="pull-right">
                 <button type="button" class="btn btn-xs btn-default" onclick="handleEditMove(this)" data-move-id="${item._id}">Edit</button>
                 <button type="button" class="btn btn-xs btn-danger" onclick="handleDeleteMove(this)" data-move-id="${item._id}">Del</button>
+                <button type="button" class="btn btn-xs btn danger" onclick="recallBoard(this)" data-move-id="${item._id}">Review</button>
             </span>
         </td>
     </tr>
 `;
 });
-compiled = `<tbody class="list-group">${compiled}</tbody>`;
+compiled = `<tbody>${compiled}</tbody>`;
 full_table = labels + compiled;
 return full_table;
 }
